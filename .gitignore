@@ -1,0 +1,8 @@
+node_modules/
+
+# Jarvis daemon tracking files (private infra, never commit)
+backup_status.md
+todo.md
+flags.md
+
+.DS_Store

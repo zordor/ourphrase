@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover, user-scalable=no">
+  <title>PassPhrase</title>
+  <meta name="description" content="Palabras secretas compartidas para saber que sois vosotros.">
+  <meta name="theme-color" content="#f2f2f7" media="(prefers-color-scheme: light)">
+  <meta name="theme-color" content="#000000" media="(prefers-color-scheme: dark)">
+  <link rel="icon" href="icons/icon-192.png" type="image/png">
+  <link rel="manifest" href="manifest.json">
+  <link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="default">
+  <meta name="apple-mobile-web-app-title" content="PassPhrase">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+  <!-- Home: contact list -->
+  <main id="screen-home" class="screen" hidden>
+    <header class="top">
+      <h1 data-i18n="appTitle">PassPhrase</h1>
+    </header>
+    <div id="contact-list" class="list"></div>
+    <div id="empty-state" class="empty" hidden>
+      <div class="empty-art" aria-hidden="true"><span></span><span></span></div>
+      <h2 data-i18n="emptyTitle"></h2>
+      <p data-i18n="emptyBody"></p>
+    </div>
+    <div class="bottom-bar">
+      <button id="btn-new" class="primary" data-i18n="newContact"></button>
+      <button id="btn-scan" class="secondary" data-i18n="scanInvite"></button>
+      <button id="btn-backup-entry" class="quiet"></button>
+    </div>
+  </main>
+
+  <!-- QR scanner (in-app camera) -->
+  <main id="screen-scan" class="screen" hidden>
+    <header class="top nav">
+      <button id="btn-scan-close" class="back" aria-label="Back">‹</button>
+      <h1 class="nav-title" data-i18n="scanTitle"></h1>
+      <span class="nav-spacer"></span>
+    </header>
+    <section class="scan-stage">
+      <video id="scan-video" playsinline muted></video>
+      <p class="note center" data-i18n="scanHint"></p>
+      <p id="scan-error" class="error center" hidden></p>
+    </section>
+  </main>
+
+  <!-- Install instructions (opened via the install QR in Safari) -->
+  <main id="screen-install" class="screen" hidden>
+    <header class="top">
+      <h1>PassPhrase</h1>
+    </header>
+    <section class="share">
+      <div class="share-step">
+        <h3 data-i18n="installTitle"></h3>
+        <ol id="install-steps" class="install-steps"></ol>
+        <p class="note" data-i18n="installThen"></p>
+      </div>
+    </section>
+  </main>
+
+  <!-- Backup / restore -->
+  <main id="screen-backup" class="screen" hidden>
+    <header class="top nav">
+      <button class="back" data-nav="home" aria-label="Back">‹</button>
+      <h1 class="nav-title" data-i18n="backup"></h1>
+      <span class="nav-spacer"></span>
+    </header>
+    <section id="backup-menu" class="share">
+      <div class="share-step" id="backup-make-card">
+        <h3 data-i18n="backupHint"></h3>
+        <button id="btn-make-backup" class="primary" data-i18n="makeBackup"></button>
+        <p id="backup-stale" class="note stale" hidden data-i18n="staleBackup"></p>
+        <button id="btn-show-words" class="quiet" data-i18n="showWords" hidden></button>
+      </div>
+      <div class="share-step">
+        <h3 data-i18n="restoreTitle"></h3>
+        <input id="restore-file" type="file" accept=".txt,text/plain,application/json" hidden>
+        <button id="btn-choose-file" class="secondary" data-i18n="chooseFile"></button>
+        <p id="restore-file-name" class="note" hidden></p>
+        <textarea id="restore-words" class="words-input" rows="3"></textarea>
+        <p id="restore-error" class="error" hidden></p>
+        <button id="btn-restore" class="primary" data-i18n="restoreBtn"></button>
+      </div>
+    </section>
+    <section id="backup-words" class="share" hidden>
+      <div class="share-step">
+        <h3 data-i18n="wordsNote"></h3>
+        <div id="words-grid" class="words-grid"></div>
+        <button id="btn-words-done" class="primary" data-i18n="wordsDone"></button>
+      </div>
+    </section>
+  </main>
+
+  <!-- Verify: the words -->
+  <main id="screen-verify" class="screen" hidden>
+    <header class="top nav">
+      <button class="back" data-nav="home" aria-label="Back">‹</button>
+      <h1 id="verify-name" class="nav-title"></h1>
+      <span class="nav-spacer"></span>
+    </header>
+    <section class="words-stage">
+      <div id="words" class="words" aria-live="polite">
+        <div class="word" id="word-1"></div>
+        <div class="word" id="word-2"></div>
+      </div>
+      <div class="ring-wrap">
+        <svg id="ring" viewBox="0 0 72 72" width="72" height="72" aria-hidden="true">
+          <circle class="ring-bg" cx="36" cy="36" r="30"></circle>
+          <circle id="ring-fg" class="ring-fg" cx="36" cy="36" r="30"></circle>
+        </svg>
+        <div id="ring-time" class="ring-time">5:00</div>
+      </div>
+      <p id="prev-hint" class="prev-hint" hidden></p>
+      <p class="verify-hint" data-i18n="verifyHint"></p>
+    </section>
+    <footer class="verify-actions">
+      <button id="btn-reshare" class="quiet" data-i18n="reshare"></button>
+      <button id="btn-delete" class="quiet danger" data-i18n="delete"></button>
+    </footer>
+  </main>
+
+  <!-- New contact -->
+  <main id="screen-new" class="screen" hidden>
+    <header class="top nav">
+      <button class="back" data-nav="home" aria-label="Back">‹</button>
+      <h1 class="nav-title" data-i18n="newContact"></h1>
+      <span class="nav-spacer"></span>
+    </header>
+    <form id="form-new" class="form">
+      <label for="new-name" data-i18n="nameLabel"></label>
+      <input id="new-name" type="text" maxlength="24" autocomplete="off" required>
+      <label data-i18n="langLabel"></label>
+      <div class="seg" role="radiogroup" id="lang-seg">
+        <button type="button" class="seg-btn selected" data-lang="es">Español</button>
+        <button type="button" class="seg-btn" data-lang="en">English</button>
+      </div>
+      <div class="bottom-bar in-form">
+        <button type="submit" class="primary" data-i18n="continueBtn"></button>
+      </div>
+    </form>
+  </main>
+
+  <!-- Share invitation -->
+  <main id="screen-share" class="screen" hidden>
+    <header class="top nav">
+      <button class="back" data-nav="verify" aria-label="Back">‹</button>
+      <h1 id="share-title" class="nav-title"></h1>
+      <span class="nav-spacer"></span>
+    </header>
+    <section class="share">
+      <div class="share-step">
+        <h3 data-i18n="step1"></h3>
+        <button id="btn-share-link" class="primary" data-i18n="shareLink"></button>
+      </div>
+      <div class="share-step">
+        <h3 data-i18n="step2"></h3>
+        <div id="share-pin" class="pin-display" aria-label="PIN"></div>
+        <p class="note" data-i18n="pinNote"></p>
+      </div>
+      <div class="share-step">
+        <h3 data-i18n="togetherQ"></h3>
+        <button id="btn-show-qr" class="secondary" data-i18n="showQr"></button>
+        <div id="qr-box" class="qr-box" hidden>
+          <div class="seg" id="qr-tabs">
+            <button type="button" class="seg-btn" data-qrtab="install" data-i18n="qrTabInstall"></button>
+            <button type="button" class="seg-btn selected" data-qrtab="pair" data-i18n="qrTabPair"></button>
+          </div>
+          <canvas id="qr-canvas" width="512" height="512"></canvas>
+          <p id="qr-caption" class="note"></p>
+        </div>
+      </div>
+    </section>
+    <div class="bottom-bar">
+      <button id="btn-share-done" class="secondary" data-i18n="done"></button>
+    </div>
+  </main>
+
+  <!-- Join (opened invite link) -->
+  <main id="screen-join" class="screen" hidden>
+    <header class="top nav">
+      <span class="nav-spacer"></span>
+      <h1 id="join-title" class="nav-title"></h1>
+      <span class="nav-spacer"></span>
+    </header>
+    <section class="form join">
+      <p data-i18n="joinBody"></p>
+      <input id="join-pin" type="text" inputmode="numeric" pattern="[0-9]*" maxlength="4"
+             autocomplete="one-time-code" class="pin-input" aria-label="PIN">
+      <p id="join-error" class="error" hidden data-i18n="pinWrong"></p>
+      <div class="bottom-bar in-form">
+        <button id="btn-join" class="primary" data-i18n="joinBtn"></button>
+        <button id="btn-join-cancel" class="quiet" data-nav="home" data-i18n="cancel"></button>
+      </div>
+    </section>
+  </main>
+
+  <script type="module" src="js/app.js"></script>
+</body>
+</html>
