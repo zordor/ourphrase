@@ -1,12 +1,24 @@
-# PassPhrase
+# OurPhrase
 
-Zero-infrastructure, 100 % offline PWA that gives two (or more) people a pair of
-**shared secret words that change every 5 minutes** — a human-friendly way to
-verify you are really talking to each other (anti-impersonation / anti-deepfake
-check over any channel).
+[![MPL-2.0](https://img.shields.io/badge/license-MPL--2.0-blue.svg)](LICENSE)
+[![Tests](https://github.com/zordor/ourphrase/actions/workflows/test.yml/badge.svg)](https://github.com/zordor/ourphrase/actions/workflows/test.yml)
+[![Website](https://img.shields.io/badge/website-ourphrase.org-175cf5)](https://ourphrase.org)
+
+OurPhrase is a free, open-source iOS application that gives people a pair of
+**shared secret words that change every five minutes**—a human-friendly check
+against impersonation, deepfakes and cloned voices over any communication
+channel.
 
 No servers, no accounts, no analytics, no network calls. Everything —
 cryptography, dictionaries, QR generation — is bundled and runs locally.
+
+The fully native SwiftUI app lives in [`ios/`](ios/README.md). The original
+offline PWA remains for legacy users, encrypted-backup migration and protocol
+compatibility.
+
+> OurPhrase is a supplementary check, not proof of identity. Read the
+> [disclaimer](DISCLAIMER.md) and [threat model](docs/threat-model.md) before
+> relying on it in high-risk situations.
 
 ## How it works
 
@@ -17,6 +29,9 @@ cryptography, dictionaries, QR generation — is bundled and runs locally.
   HMAC-SHA256. A 1-byte checksum catches mistyped PINs at pairing time.
 - **Pairing (in person)**: one QR code containing the full secret (PIN
   included) — scan with the iOS camera and you're done.
+- **Private names**: a profile says who you are when connecting, while each
+  person chooses their own local alias afterwards. The inviter's profile name
+  is never copied into the other person's contact list.
 - **Verification**: both devices compute
   `HMAC-SHA256(masterKey, timeWindow)` → two words from the contact's
   dictionary (Spanish or English, chosen per contact). Words rotate every
@@ -53,6 +68,8 @@ js/qr.js              QR encoder (verified against jsQR + qrcode reference)
 sw.js manifest.json   PWA/offline packaging
 scripts/make-icons.mjs regenerates icons/ (hand-rolled PNG writer)
 tests/                node --test suite (crypto, dictionaries, QR)
+ios/                  native SwiftUI iOS/iPadOS application and tests
+website/              public site, privacy policy and Universal Link fallback
 ```
 
 ## Develop / test
@@ -76,3 +93,20 @@ Screen.
   Treat the invitation link with the same care as a house key.
 - Keys live in `localStorage`, scoped to the app's origin. Deleting the contact
   (or the site data) destroys them.
+
+Please report vulnerabilities privately as described in [SECURITY.md](SECURITY.md).
+Do not publish real invitation payloads, keys or recovery phrases.
+
+## Contributing and governance
+
+Contributions are welcome. Start with [CONTRIBUTING.md](CONTRIBUTING.md), follow
+the [Code of Conduct](CODE_OF_CONDUCT.md), and review the
+[governance model](GOVERNANCE.md).
+
+## License and marks
+
+Source code is available under the [Mozilla Public License 2.0](LICENSE).
+Distributed modifications to covered files must remain available under MPL-2.0.
+The **OurPhrase** name, logo and visual identity are not granted by the source
+license; see [TRADEMARKS.md](TRADEMARKS.md). Third-party notices are in
+[NOTICE](NOTICE).

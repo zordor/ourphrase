@@ -1,6 +1,6 @@
 {
-  "name": "PassPhrase",
-  "short_name": "PassPhrase",
+  "name": "OurPhrase",
+  "short_name": "OurPhrase",
   "description": "Shared secret words to know it's really you.",
   "start_url": "./",
   "scope": "./",

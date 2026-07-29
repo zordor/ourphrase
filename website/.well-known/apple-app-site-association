@@ -1,0 +1,18 @@
+{
+  "applinks": {
+    "details": [
+      {
+        "appIDs": ["TEAM_ID.org.ourphrase.app"],
+        "components": [
+          {
+            "/": "/invite",
+            "comment": "OurPhrase invitation links. The secret stays in the URL fragment."
+          }
+        ]
+      }
+    ]
+  },
+  "webcredentials": {
+    "apps": []
+  }
+}

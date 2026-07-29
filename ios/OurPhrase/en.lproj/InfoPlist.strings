@@ -1,0 +1,3 @@
+"NSCameraUsageDescription" = "OurPhrase uses the camera only to scan connection codes.";
+"NSFaceIDUsageDescription" = "Face ID protects access to your connections and shared words.";
+

@@ -1,0 +1,9 @@
+OurPhrase
+Copyright 2026 OurPhrase contributors
+
+This project is licensed under the Mozilla Public License 2.0. The
+OurPhrase name, logo and visual identity are not licensed for use as a
+brand. See TRADEMARKS.md.
+
+The web QR scanner includes jsQR, Copyright 2017 Cozmo, licensed under
+the Apache License 2.0. See js/vendor/jsQR.js.

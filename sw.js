@@ -1,5 +1,5 @@
-// PassPhrase service worker — full offline: precache everything, cache-first.
-const CACHE = "passphrase-v3";
+// OurPhrase service worker — full offline: precache everything, cache-first.
+const CACHE = "ourphrase-v5";
 const ASSETS = [
   "./",
   "./index.html",

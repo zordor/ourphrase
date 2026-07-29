@@ -1,4 +1,4 @@
-// PassPhrase Identity — cryptographic engine.
+// OurPhrase Identity — cryptographic engine.
 // Isomorphic ES module: runs in the browser and in Node >= 18 (globalThis.crypto).
 // All primitives come from WebCrypto (SubtleCrypto); nothing leaves the device.
 
@@ -75,6 +75,8 @@ export async function deriveMasterKey(part1Bytes, pin, saltBytes, nonceBytes) {
 
 // Invite payload carried in the link fragment / QR. `pin` is present only in
 // the QR (in-person) variant — the link variant travels without it on purpose.
+// `name` is the inviter's own profile name. It is presentation metadata only:
+// each device chooses and stores its own private alias after deriving the key.
 export function createInvite(name, lang) {
   return {
     v: 1,

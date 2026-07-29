@@ -1,4 +1,4 @@
-// Unit tests for the PassPhrase Identity crypto engine.
+// Unit tests for the OurPhrase Identity crypto engine.
 // Run: node --test tests/
 import { test } from "node:test";
 import assert from "node:assert/strict";

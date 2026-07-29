@@ -1,0 +1,29 @@
+name: Bug report
+description: Report reproducible incorrect behavior (not vulnerabilities)
+body:
+  - type: markdown
+    attributes:
+      value: "For vulnerabilities, use GitHub's private security advisory form."
+  - type: textarea
+    id: description
+    attributes:
+      label: What happened?
+    validations:
+      required: true
+  - type: textarea
+    id: reproduce
+    attributes:
+      label: Reproduction steps
+    validations:
+      required: true
+  - type: input
+    id: version
+    attributes:
+      label: Version and device
+    validations:
+      required: true
+  - type: textarea
+    id: logs
+    attributes:
+      label: Additional context
+      description: Remove names, invitation payloads, keys and recovery phrases.

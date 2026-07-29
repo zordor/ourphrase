@@ -1,0 +1,21 @@
+name: Feature request
+description: Propose an improvement consistent with the privacy model
+body:
+  - type: textarea
+    id: problem
+    attributes:
+      label: Problem
+    validations:
+      required: true
+  - type: textarea
+    id: proposal
+    attributes:
+      label: Proposed solution
+    validations:
+      required: true
+  - type: textarea
+    id: privacy
+    attributes:
+      label: Security and privacy implications
+    validations:
+      required: true

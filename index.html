@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover, user-scalable=no">
-  <title>PassPhrase</title>
+  <title>OurPhrase</title>
   <meta name="description" content="Palabras secretas compartidas para saber que sois vosotros.">
   <meta name="theme-color" content="#f2f2f7" media="(prefers-color-scheme: light)">
   <meta name="theme-color" content="#000000" media="(prefers-color-scheme: dark)">
@@ -13,7 +13,7 @@
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="default">
-  <meta name="apple-mobile-web-app-title" content="PassPhrase">
+  <meta name="apple-mobile-web-app-title" content="OurPhrase">
   <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
@@ -21,7 +21,7 @@
   <!-- Home: contact list -->
   <main id="screen-home" class="screen" hidden>
     <header class="top">
-      <h1 data-i18n="appTitle">PassPhrase</h1>
+      <h1 data-i18n="appTitle">OurPhrase</h1>
     </header>
     <div id="contact-list" class="list"></div>
     <div id="empty-state" class="empty" hidden>
@@ -32,8 +32,26 @@
     <div class="bottom-bar">
       <button id="btn-new" class="primary" data-i18n="newContact"></button>
       <button id="btn-scan" class="secondary" data-i18n="scanInvite"></button>
+      <button id="btn-profile" class="quiet" data-i18n="myProfile"></button>
       <button id="btn-backup-entry" class="quiet"></button>
     </div>
+  </main>
+
+  <!-- Local identity -->
+  <main id="screen-profile" class="screen" hidden>
+    <header class="top nav">
+      <button id="btn-profile-back" class="back" aria-label="Back">‹</button>
+      <h1 class="nav-title" data-i18n="profileTitle"></h1>
+      <span class="nav-spacer"></span>
+    </header>
+    <form id="form-profile" class="form">
+      <p data-i18n="profileBody"></p>
+      <label for="profile-name" data-i18n="profileNameLabel"></label>
+      <input id="profile-name" type="text" maxlength="24" autocomplete="name" required>
+      <div class="bottom-bar in-form">
+        <button type="submit" class="primary" data-i18n="save"></button>
+      </div>
+    </form>
   </main>
 
   <!-- QR scanner (in-app camera) -->
@@ -53,7 +71,7 @@
   <!-- Install instructions (opened via the install QR in Safari) -->
   <main id="screen-install" class="screen" hidden>
     <header class="top">
-      <h1>PassPhrase</h1>
+      <h1>OurPhrase</h1>
     </header>
     <section class="share">
       <div class="share-step">
@@ -133,8 +151,7 @@
       <span class="nav-spacer"></span>
     </header>
     <form id="form-new" class="form">
-      <label for="new-name" data-i18n="nameLabel"></label>
-      <input id="new-name" type="text" maxlength="24" autocomplete="off" required>
+      <p data-i18n="newConnectionBody"></p>
       <label data-i18n="langLabel"></label>
       <div class="seg" role="radiogroup" id="lang-seg">
         <button type="button" class="seg-btn selected" data-lang="es">Español</button>
@@ -142,6 +159,24 @@
       </div>
       <div class="bottom-bar in-form">
         <button type="submit" class="primary" data-i18n="continueBtn"></button>
+      </div>
+    </form>
+  </main>
+
+  <!-- Private alias, chosen independently on each device -->
+  <main id="screen-alias" class="screen" hidden>
+    <header class="top nav">
+      <span class="nav-spacer"></span>
+      <h1 class="nav-title" data-i18n="saveConnectionTitle"></h1>
+      <span class="nav-spacer"></span>
+    </header>
+    <form id="form-alias" class="form">
+      <p id="alias-body"></p>
+      <label for="alias-name" data-i18n="aliasLabel"></label>
+      <input id="alias-name" type="text" maxlength="24" autocomplete="off" required>
+      <p class="note" data-i18n="aliasPrivate"></p>
+      <div class="bottom-bar in-form">
+        <button type="submit" class="primary" data-i18n="saveConnection"></button>
       </div>
     </form>
   </main>

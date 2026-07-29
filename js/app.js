@@ -1,4 +1,4 @@
-// PassPhrase — app controller. No frameworks, no network, no analytics.
+// OurPhrase — app controller. No frameworks, no network, no analytics.
 import {
   createInvite, encodeInvite, decodeInvite, masterKeyFromInvite, checkByte,
   b64urlEncode, b64urlDecode, windowIndex, windowRemainingMs,
@@ -13,15 +13,26 @@ import { generateSeed, encryptVault, decryptVault } from "./vault.js";
 // ---------------------------------------------------------------------------
 const STRINGS = {
   es: {
-    appTitle: "PassPhrase",
+    appTitle: "OurPhrase",
     emptyTitle: "Palabras secretas compartidas",
     emptyBody: "Conecta con alguien de confianza. Los dos veréis las mismas dos palabras, que cambian cada 5 minutos. Si coinciden, sabéis que sois vosotros.",
-    newContact: "Nuevo contacto",
-    nameLabel: "¿Cómo llamas a este grupo o persona?",
-    namePlaceholder: "Familia, Trabajo…",
+    newContact: "Crear conexión",
+    newConnectionBody: "Crea un código para que la otra persona lo escanee. Después cada uno elegirá en privado cómo guardar la conexión.",
+    myProfile: "Mi perfil",
+    profileTitle: "Mi perfil",
+    profileBody: "Este es el nombre con el que te presentas al conectar. La otra persona podrá guardarte con el nombre que quiera.",
+    profileNameLabel: "¿Quién eres?",
+    save: "Guardar",
+    saveConnectionTitle: "Guardar conexión",
+    aliasLabel: "¿Cómo quieres guardar esta conexión?",
+    aliasPrivate: "Este nombre solo se guarda en tu dispositivo.",
+    aliasBodyKnown: "{name} quiere conectar contigo.",
+    aliasBodyUnknown: "Elige un nombre para reconocer esta conexión.",
+    saveConnection: "Guardar y conectar",
     langLabel: "Idioma de las palabras",
     continueBtn: "Continuar",
     shareTitle: "Conectar: {name}",
+    shareNewTitle: "Tu código para conectar",
     step1: "1 · Envíale este enlace",
     shareLink: "Enviar enlace",
     linkCopied: "Enlace copiado. Pégalo en un mensaje.",
@@ -56,31 +67,42 @@ const STRINGS = {
     restoreBtn: "Recuperar",
     restoreNeedBoth: "Falta el fichero o las palabras.",
     badWords: "Esas palabras no abren este fichero. Revisa el orden y la escritura.",
-    badFile: "Ese fichero no parece una copia de PassPhrase.",
+    badFile: "Ese fichero no parece una copia de OurPhrase.",
     restoreOk: "Recuperado: {n} contactos.",
     scanInvite: "Escanear invitación",
     scanTitle: "Escanear",
     scanHint: "Apunta al código que te enseña la otra persona.",
     scanCameraError: "No se pudo abrir la cámara. Revisa el permiso de cámara, o usa el enlace de invitación.",
-    scanNotInvite: "Ese código no es una invitación de PassPhrase.",
+    scanNotInvite: "Ese código no es una invitación de OurPhrase.",
     scanIsInstallQr: "Ese es el código de instalar la app. Pide el código de «Conectar».",
     qrTabInstall: "Instalar la app",
     qrTabPair: "Conectar",
-    qrCaptionPair: "Que abra PassPhrase y pulse «Escanear invitación». Con esto no hace falta PIN.",
+    qrCaptionPair: "Que abra OurPhrase y pulse «Escanear invitación». Con esto no hace falta PIN.",
     qrCaptionInstall: "¿Aún no tiene la app? Que escanee esto con la cámara del móvil y siga los pasos. Después enséñale el código de «Conectar».",
-    installTitle: "Instala PassPhrase en tu móvil",
+    installTitle: "Instala OurPhrase en tu móvil",
     installThen: "Cuando la tengas instalada, ábrela y pulsa «Escanear invitación» para conectar con quien te invitó.",
   },
   en: {
-    appTitle: "PassPhrase",
+    appTitle: "OurPhrase",
     emptyTitle: "Shared secret words",
     emptyBody: "Connect with someone you trust. You will both see the same two words, changing every 5 minutes. If they match, you know it's really you.",
-    newContact: "New contact",
-    nameLabel: "What do you call this group or person?",
-    namePlaceholder: "Family, Work…",
+    newContact: "Create connection",
+    newConnectionBody: "Create a code for the other person to scan. Afterwards, each of you privately chooses how to save the connection.",
+    myProfile: "My profile",
+    profileTitle: "My profile",
+    profileBody: "This is the name you introduce yourself with when connecting. The other person can save you under any name.",
+    profileNameLabel: "Who are you?",
+    save: "Save",
+    saveConnectionTitle: "Save connection",
+    aliasLabel: "How do you want to save this connection?",
+    aliasPrivate: "This name is stored only on your device.",
+    aliasBodyKnown: "{name} wants to connect with you.",
+    aliasBodyUnknown: "Choose a name so you can recognize this connection.",
+    saveConnection: "Save and connect",
     langLabel: "Language of the words",
     continueBtn: "Continue",
     shareTitle: "Connect: {name}",
+    shareNewTitle: "Your connection code",
     step1: "1 · Send them this link",
     shareLink: "Send link",
     linkCopied: "Link copied. Paste it into a message.",
@@ -115,19 +137,19 @@ const STRINGS = {
     restoreBtn: "Restore",
     restoreNeedBoth: "The file or the words are missing.",
     badWords: "Those words don't open this file. Check the order and spelling.",
-    badFile: "That file doesn't look like a PassPhrase backup.",
+    badFile: "That file doesn't look like a OurPhrase backup.",
     restoreOk: "Restored: {n} contacts.",
     scanInvite: "Scan invitation",
     scanTitle: "Scan",
     scanHint: "Point at the code the other person is showing you.",
     scanCameraError: "Couldn't open the camera. Check the camera permission, or use the invitation link.",
-    scanNotInvite: "That code is not a PassPhrase invitation.",
+    scanNotInvite: "That code is not a OurPhrase invitation.",
     scanIsInstallQr: "That's the install-the-app code. Ask for the “Connect” code.",
     qrTabInstall: "Install the app",
     qrTabPair: "Connect",
-    qrCaptionPair: "Have them open PassPhrase and tap “Scan invitation”. No PIN needed this way.",
+    qrCaptionPair: "Have them open OurPhrase and tap “Scan invitation”. No PIN needed this way.",
     qrCaptionInstall: "Don't have the app yet? Have them scan this with the phone camera and follow the steps. Then show them the “Connect” code.",
-    installTitle: "Install PassPhrase on your phone",
+    installTitle: "Install OurPhrase on your phone",
     installThen: "Once installed, open it and tap “Scan invitation” to connect with whoever invited you.",
   },
 };
@@ -137,24 +159,24 @@ const INSTALL_STEPS = {
     ios: [
       "Toca el botón Compartir de Safari (el cuadrado con la flecha hacia arriba).",
       "Elige «Añadir a pantalla de inicio».",
-      "Abre PassPhrase desde el icono nuevo.",
+      "Abre OurPhrase desde el icono nuevo.",
     ],
     other: [
       "Abre el menú del navegador (⋮).",
       "Elige «Instalar aplicación» o «Añadir a pantalla de inicio».",
-      "Abre PassPhrase desde el icono nuevo.",
+      "Abre OurPhrase desde el icono nuevo.",
     ],
   },
   en: {
     ios: [
       "Tap Safari's Share button (the square with the arrow pointing up).",
       "Choose “Add to Home Screen”.",
-      "Open PassPhrase from the new icon.",
+      "Open OurPhrase from the new icon.",
     ],
     other: [
       "Open the browser menu (⋮).",
       "Choose “Install app” or “Add to Home Screen”.",
-      "Open PassPhrase from the new icon.",
+      "Open OurPhrase from the new icon.",
     ],
   },
 };
@@ -167,6 +189,7 @@ const t = (key, vars = {}) =>
 // storage
 // ---------------------------------------------------------------------------
 const STORE_KEY = "passphrase.contacts.v1";
+const PROFILE_KEY = "passphrase.profile.v1";
 
 function loadContacts() {
   try { return JSON.parse(localStorage.getItem(STORE_KEY)) || []; }
@@ -175,11 +198,20 @@ function loadContacts() {
 function saveContacts(list) {
   localStorage.setItem(STORE_KEY, JSON.stringify(list));
 }
+function loadProfile() {
+  try { return JSON.parse(localStorage.getItem(PROFILE_KEY)) || null; }
+  catch { return null; }
+}
+function saveProfile(profile) {
+  localStorage.setItem(PROFILE_KEY, JSON.stringify(profile));
+}
 
 // contact: { id, name, lang, key(b64url), invite{...pin}, hue, created }
 let contacts = loadContacts();
+let profile = loadProfile();
 let current = null;        // contact shown on verify screen
 let pendingInvite = null;  // invite being joined (from link)
+let pendingContact = null; // derived connection awaiting its private local alias
 
 function hueFromKey(keyB64) {
   const k = b64urlDecode(keyB64);
@@ -191,7 +223,7 @@ async function contactFromInvite(invite, pin) {
   const keyB64 = b64urlEncode(key);
   return {
     id: invite.s1.slice(0, 12),
-    name: invite.n || "—",
+    name: "",
     lang: invite.l,
     key: keyB64,
     invite: { ...invite, pin },
@@ -218,7 +250,6 @@ function show(name) {
 for (const el of document.querySelectorAll("[data-i18n]")) {
   el.textContent = t(el.dataset.i18n);
 }
-document.getElementById("new-name").placeholder = t("namePlaceholder");
 document.getElementById("restore-words").placeholder = t("typeWords");
 document.documentElement.lang = UI_LANG;
 
@@ -325,8 +356,26 @@ document.addEventListener("visibilitychange", () => {
 // new contact + share
 // ---------------------------------------------------------------------------
 document.getElementById("btn-new").addEventListener("click", () => {
+  if (!profile?.name) { openProfile(true); return; }
   show("new");
-  setTimeout(() => document.getElementById("new-name").focus(), 350);
+});
+
+function openProfile(required = false) {
+  document.getElementById("btn-profile-back").hidden = required;
+  document.getElementById("profile-name").value = profile?.name || "";
+  show("profile");
+  setTimeout(() => document.getElementById("profile-name").focus(), 350);
+}
+
+document.getElementById("btn-profile").addEventListener("click", () => openProfile(false));
+document.getElementById("btn-profile-back").addEventListener("click", () => show("home"));
+document.getElementById("form-profile").addEventListener("submit", (e) => {
+  e.preventDefault();
+  const name = document.getElementById("profile-name").value.trim();
+  if (!name) return;
+  profile = { name };
+  saveProfile(profile);
+  show("home");
 });
 
 let newLang = UI_LANG in DICTIONARIES ? UI_LANG : "es";
@@ -345,15 +394,10 @@ for (const b of document.querySelectorAll(".seg-btn")) {
 
 document.getElementById("form-new").addEventListener("submit", async (e) => {
   e.preventDefault();
-  const name = document.getElementById("new-name").value.trim();
-  if (!name) return;
-  const invite = createInvite(name, newLang);
+  const invite = createInvite(profile.name, newLang);
   const contact = await contactFromInvite(invite, invite.pin);
   contact.invite.c = await checkByte(b64urlDecode(contact.key));
-  contacts.push(contact);
-  saveContacts(contacts);
   current = contact;
-  document.getElementById("new-name").value = "";
   openShare(contact);
 });
 
@@ -372,13 +416,22 @@ function inviteUrl(contact, includePin) {
 }
 
 function openShare(contact) {
+  if (!profile?.name) { openProfile(true); return; }
   current = contact;
+  // The invite carries our identity as a presentation only. It is never used
+  // as the other device's local contact name.
+  contact.invite.n = profile.name;
   document.documentElement.style.setProperty("--hue", contact.hue);
-  document.getElementById("share-title").textContent = t("shareTitle", { name: contact.name });
+  document.getElementById("share-title").textContent = contact.name
+    ? t("shareTitle", { name: contact.name })
+    : t("shareNewTitle");
   document.getElementById("share-pin").textContent = contact.invite.pin;
-  document.getElementById("qr-box").hidden = true;
   setQrTab("pair");
   show("share");
+  // Pairing is QR-first: the code is ready as soon as this screen opens.
+  document.getElementById("qr-box").hidden = false;
+  document.getElementById("btn-show-qr").hidden = true;
+  renderQr();
 }
 
 document.getElementById("btn-share-link").addEventListener("click", async () => {
@@ -434,7 +487,37 @@ document.getElementById("qr-tabs").addEventListener("click", (e) => {
   renderQr();
 });
 
-document.getElementById("btn-share-done").addEventListener("click", () => openVerify(current));
+function requestAlias(contact, suggestedName = "") {
+  pendingContact = contact;
+  document.getElementById("alias-body").textContent = suggestedName
+    ? t("aliasBodyKnown", { name: suggestedName })
+    : t("aliasBodyUnknown");
+  document.getElementById("alias-name").value = suggestedName;
+  show("alias");
+  setTimeout(() => {
+    const input = document.getElementById("alias-name");
+    input.focus();
+    input.select();
+  }, 350);
+}
+
+document.getElementById("form-alias").addEventListener("submit", (e) => {
+  e.preventDefault();
+  const name = document.getElementById("alias-name").value.trim();
+  if (!name || !pendingContact) return;
+  pendingContact.name = name;
+  const existing = contacts.find((c) => c.id === pendingContact.id);
+  if (!existing) contacts.push(pendingContact);
+  saveContacts(contacts);
+  current = existing || pendingContact;
+  pendingContact = null;
+  openVerify(current);
+});
+
+document.getElementById("btn-share-done").addEventListener("click", () => {
+  if (contacts.some((c) => c.id === current.id)) openVerify(current);
+  else requestAlias(current);
+});
 document.getElementById("btn-reshare").addEventListener("click", () => openShare(current));
 document.getElementById("btn-delete").addEventListener("click", () => {
   if (!confirm(t("deleteConfirm", { name: current.name }))) return;
@@ -568,9 +651,7 @@ async function joinFromInvite(invite) {
     // QR variant: PIN embedded, no typing needed
     const contact = await contactFromInvite(invite, invite.p);
     delete contact.invite.p;
-    contacts.push(contact);
-    saveContacts(contacts);
-    openVerify(contact);
+    requestAlias(contact, invite.n || "");
     return;
   }
   pendingInvite = invite;
@@ -721,9 +802,7 @@ async function tryJoin() {
     }
   }
   pendingInvite = null;
-  contacts.push(contact);
-  saveContacts(contacts);
-  openVerify(contact);
+  requestAlias(contact, contact.invite.n || "");
 }
 
 document.getElementById("btn-join").addEventListener("click", tryJoin);
@@ -737,7 +816,10 @@ document.getElementById("join-pin").addEventListener("input", (e) => {
 document.addEventListener("click", (e) => {
   const nav = e.target.closest("[data-nav]");
   if (!nav) return;
-  if (nav.dataset.nav === "verify" && current) openVerify(current);
+  if (nav.dataset.nav === "verify" && current) {
+    if (contacts.some((c) => c.id === current.id)) openVerify(current);
+    else show("new");
+  }
   else show("home");
 });
 
@@ -761,5 +843,8 @@ if ("serviceWorker" in navigator && location.protocol !== "file:") {
     }
   }
   const handled = await handleInviteHash();
-  if (!handled) show("home");
+  if (!handled) {
+    if (!profile?.name) openProfile(true);
+    else show("home");
+  }
 })();

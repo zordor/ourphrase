@@ -1,4 +1,8 @@
 node_modules/
+ios/DerivedData/
+ios/*.xcworkspace/xcuserdata/
+ios/*.xcodeproj/xcuserdata/
+*.xcuserstate
 
 # Jarvis daemon tracking files (private infra, never commit)
 backup_status.md

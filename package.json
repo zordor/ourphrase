@@ -1,5 +1,9 @@
 {
-  "name": "securephrase",
+  "name": "ourphrase",
+  "description": "Shared rotating words for human identity checks",
+  "license": "MPL-2.0",
+  "repository": "github:zordor/ourphrase",
+  "homepage": "https://ourphrase.org",
   "private": true,
   "type": "module",
   "scripts": {
