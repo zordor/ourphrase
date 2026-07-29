@@ -20,6 +20,9 @@ compatibility.
 > [disclaimer](DISCLAIMER.md) and [threat model](docs/threat-model.md) before
 > relying on it in high-risk situations.
 
+Development status and the ordered path to the first iOS release are tracked
+in the [project roadmap](ROADMAP.md).
+
 ## How it works
 
 - **Pairing (remote, two channels)**: User A creates a contact and sends an
