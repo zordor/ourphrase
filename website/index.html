@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
   <meta name="color-scheme" content="light dark">
-  <meta name="description" content="OurPhrase te ayuda a comprobar que una persona es realmente quien dice ser mediante dos palabras compartidas que cambian automáticamente.">
+  <meta name="description" content="OurPhrase es software libre y gratuito para comprobar que una persona es realmente quien dice ser mediante dos palabras compartidas.">
   <meta property="og:title" content="OurPhrase — Comprueba que son ellos">
   <meta property="og:description" content="Dos palabras compartidas frente a suplantaciones y voces clonadas.">
   <meta property="og:type" content="website">
@@ -17,7 +17,7 @@
     .brand{display:flex;align-items:center;gap:11px;font-weight:760;text-decoration:none}.mark{width:36px;height:36px;border-radius:11px;display:grid;place-items:center;color:#fff;background:linear-gradient(145deg,var(--blue),var(--blue2));box-shadow:0 9px 24px #175cf533}
     nav .links{display:flex;gap:24px;color:var(--muted);font-size:14px}nav .links a{text-decoration:none}
     .hero{max-width:1120px;margin:auto;padding:88px 24px 96px;display:grid;grid-template-columns:1.08fr .92fr;gap:72px;align-items:center}
-    .eyebrow{color:var(--blue);font-weight:750;font-size:14px;letter-spacing:.08em;text-transform:uppercase}
+    .eyebrow{color:var(--blue);font-weight:750;font-size:14px;letter-spacing:.08em;text-transform:uppercase}.free-software{display:inline-flex;align-items:center;gap:8px;margin-top:24px;padding:9px 13px;border:1px solid var(--line);border-radius:999px;color:var(--muted);font-size:14px;font-weight:680;text-decoration:none}.free-software::before{content:"◇";color:var(--blue);font-size:18px}.free-software:hover{color:var(--ink);border-color:var(--blue)}
     h1{font-size:clamp(52px,7vw,84px);line-height:.97;letter-spacing:-.065em;margin:22px 0 28px}.lead{font-size:clamp(19px,2.2vw,24px);line-height:1.5;color:var(--muted);margin:0}
     .actions{display:flex;gap:12px;flex-wrap:wrap;margin-top:36px}.button{padding:15px 21px;border-radius:15px;text-decoration:none;font-weight:720;background:var(--blue);color:#fff}.button.secondary{background:transparent;color:var(--ink);border:1px solid var(--line)}
     .phone{width:min(390px,100%);justify-self:end;border-radius:48px;padding:13px;background:#17191f;box-shadow:0 38px 90px #15214c28}.screen{min-height:590px;border-radius:38px;background:linear-gradient(165deg,#f9fbff 5%,#edf2ff);padding:36px 24px;display:flex;flex-direction:column;color:#121521}.screen-head{font-size:14px;color:#6b7280;text-align:center}.pair{margin:auto 0;text-align:center}.pair small{color:#6f7787}.words{display:flex;gap:10px;justify-content:center;margin:18px 0}.word{background:#fff;border:1px solid #dae2f5;border-radius:18px;padding:20px 16px;font-size:27px;font-weight:780;box-shadow:0 14px 30px #23376c12}.timer{height:5px;background:#dbe3f6;border-radius:5px;overflow:hidden;margin:16px 24px}.timer::after{content:"";display:block;width:63%;height:100%;background:var(--blue)}.verified{margin-top:30px;color:#1b7d48;font-size:14px;font-weight:700}
@@ -30,10 +30,10 @@
   </style>
 </head>
 <body>
-  <nav><a class="brand" href="/"><span class="mark">✓</span> OurPhrase</a><div class="links"><a href="#como-funciona">Cómo funciona</a><a href="/privacy/">Privacidad</a></div></nav>
+  <nav><a class="brand" href="/"><span class="mark">✓</span> OurPhrase</a><div class="links"><a href="#como-funciona">Cómo funciona</a><a href="https://github.com/zordor/ourphrase">GitHub</a><a href="/privacy/">Privacidad</a></div></nav>
   <main>
     <header class="hero">
-      <div><div class="eyebrow">Confianza, sin cuentas</div><h1>Comprueba que son ellos.</h1><p class="lead">Dos palabras que solo compartís vosotros y cambian cada cinco minutos. Una comprobación humana frente a suplantaciones, deepfakes y voces clonadas.</p><div class="actions"><a class="button" href="#como-funciona">Descubrir OurPhrase</a><a class="button secondary" href="/privacy/">Privacidad por diseño</a></div></div>
+      <div><div class="eyebrow">Confianza, sin cuentas</div><a class="free-software" href="https://github.com/zordor/ourphrase">Software libre (Free Software) · MPL‑2.0</a><h1>Comprueba que son ellos.</h1><p class="lead">Dos palabras que solo compartís vosotros y cambian cada cinco minutos. Una comprobación humana, gratuita y de código abierto frente a suplantaciones, deepfakes y voces clonadas.</p><div class="actions"><a class="button" href="#como-funciona">Descubrir OurPhrase</a><a class="button secondary" href="https://github.com/zordor/ourphrase">Ver el código en GitHub</a></div></div>
       <div class="phone" aria-label="Ejemplo de frase compartida"><div class="screen"><div class="screen-head">Papá · ahora</div><div class="pair"><small>Vuestra frase es</small><div class="words"><div class="word">faro</div><div class="word">cedro</div></div><div class="timer"></div><div class="verified">✓ Coinciden en ambos teléfonos</div></div></div></div>
     </header>
     <section id="como-funciona"><h2 class="section-title">Sencillo cuando importa.</h2><p class="section-copy">OurPhrase te da una señal compartida que puedes comprobar durante una llamada, un vídeo o una conversación.</p><div class="grid"><article class="card"><div class="number">1</div><h3>Conecta en persona</h3><p>Una persona muestra su QR y la otra lo escanea. Cada una decide cómo guardar a la otra.</p></article><article class="card"><div class="number">2</div><h3>Recibid lo mismo</h3><p>Ambos dispositivos calculan localmente las mismas dos palabras, sin enviarlas a ningún servidor.</p></article><article class="card"><div class="number">3</div><h3>Pregunta antes de actuar</h3><p>Si una llamada parece extraña, comparad la frase. Si no coincide, detente y verifica por otra vía.</p></article></div></section>
